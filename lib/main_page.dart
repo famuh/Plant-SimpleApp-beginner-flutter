@@ -12,6 +12,13 @@ class Mainpage extends StatefulWidget {
 }
 
 class _MainpageState extends State<Mainpage> {
+  final _scrollController = ScrollController();
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    _scrollController.dispose();
+    super.dispose();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +41,13 @@ class _MainpageState extends State<Mainpage> {
                   decoration: BoxDecoration(
                       color: Colors.grey[200],
                       borderRadius: BorderRadius.circular(20)),
-                  child: IconButton(onPressed: () {}, icon: Icon(Icons.person)),
+                  child: IconButton(onPressed: () {
+                    showDialog(context: context, builder: (BuildContext context){
+                      return AlertDialog(
+                        title: Text('profile'),
+                      );
+                    });
+                  }, icon: Icon(Icons.person)),
                 )
               ],
             ),
@@ -43,7 +56,7 @@ class _MainpageState extends State<Mainpage> {
           //search bar
           Container(
               padding: const EdgeInsets.symmetric(horizontal: 5),
-              width: 320,
+              width: MediaQuery.of(context).size.width <= 600 ? 320 : 500,
               height: 35,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
@@ -62,53 +75,57 @@ class _MainpageState extends State<Mainpage> {
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: SizedBox(
               height: 200,
-              width: 350,
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: plantDataList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    final plantData plant = plantDataList[index];
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context){
-                          return detailMobile(plant: plant);
-                        }));
-                      },
-                      child: SizedBox(
-                        width: 150,
-                        child: Card(
-                          child: Column(
-                            children: [
-                              Image.asset(
-                                plant.imageAsset,
-                              ),
-                              Expanded(
-                                  flex: 1,
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(plant.name, style: TextStyle(fontWeight: FontWeight.w600),),
-                                            Text(plant.price, style: TextStyle(fontSize: 12),)
-                                          ],
-                                        ),
-                                        FavoriteButton()
-                                       ],
-                                    ),
-                                  ))
-                            ],
+              width: MediaQuery.of(context).size.width <= 600 ? 350 : 800,
+              child: Scrollbar(
+                controller: _scrollController,
+                child: ListView.builder(
+                  controller: _scrollController,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: plantDataList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      final plantData plant = plantDataList[index];
+                      return InkWell(
+                        onTap: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context){
+                            return MediaQuery.of(context).size.width <= 600 ? detailMobile(plant: plant) : detailWeb(plant: plant);
+                          }));
+                        },
+                        child: SizedBox(
+                          width: 150,
+                          child: Card(
+                            child: Column(
+                              children: [
+                                Image.asset(
+                                  plant.imageAsset,
+                                ),
+                                Expanded(
+                                    flex: 1,
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(plant.name, style: TextStyle(fontWeight: FontWeight.w600),),
+                                              Text(plant.price, style: TextStyle(fontSize: 12),)
+                                            ],
+                                          ),
+                                          FavoriteButton()
+                                         ],
+                                      ),
+                                    ))
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    );
-                  }),
+                      );
+                    }),
+              ),
             ),
           )
         ],
@@ -139,3 +156,4 @@ class _FavoriteButtonState extends State<FavoriteButton> {
     );
   }
 }
+
