@@ -11,8 +11,6 @@ class Mainpage extends StatefulWidget {
 }
 
 class _MainpageState extends State<Mainpage> {
-  bool isFavorite = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,17 +88,14 @@ class _MainpageState extends State<Mainpage> {
                                       children: [
                                         Column(
                                           children: [
-                                            Text(plant.name),
-                                            Text(plant.price)
+                                            Text(plant.name, style: TextStyle(fontWeight: FontWeight.w600),),
+                                            Text(plant.price, style: TextStyle(fontSize: 12),)
                                           ],
                                         ),
-                                        IconButton(onPressed: (){
-                                          setState(() {
-                                            isFavorite = !isFavorite;
-                                            print(isFavorite);
-                                          });
-                                        }, icon: Icon(Icons.favorite_border))
-                                      ],
+                                        FavoriteButton()
+                                       ],
+                                       
+                                       
                                     ),
                                   ))
                             ],
@@ -113,6 +108,29 @@ class _MainpageState extends State<Mainpage> {
           )
         ],
       )),
+    );
+  }
+}
+
+class FavoriteButton extends StatefulWidget {
+  FavoriteButton({Key? key}) : super(key: key);
+
+  @override
+  State<FavoriteButton> createState() => _FavoriteButtonState();
+}
+
+class _FavoriteButtonState extends State<FavoriteButton> {
+  bool isFavorite = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: (){
+        setState(() {
+          isFavorite = !isFavorite;
+        });
+      },
+      icon: isFavorite == true ? Icon(Icons.favorite) : Icon(Icons.favorite_border),
     );
   }
 }
