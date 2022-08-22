@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application/detail_page.dart';
 import 'package:flutter_application/model/model_data.dart';
 
 class Mainpage extends StatefulWidget {
@@ -68,7 +69,11 @@ class _MainpageState extends State<Mainpage> {
                   itemBuilder: (BuildContext context, int index) {
                     final plantData plant = plantDataList[index];
                     return InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return detailMobile(plant: plant);
+                        }));
+                      },
                       child: SizedBox(
                         width: 150,
                         child: Card(
@@ -87,6 +92,8 @@ class _MainpageState extends State<Mainpage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(plant.name, style: TextStyle(fontWeight: FontWeight.w600),),
                                             Text(plant.price, style: TextStyle(fontSize: 12),)
@@ -94,8 +101,6 @@ class _MainpageState extends State<Mainpage> {
                                         ),
                                         FavoriteButton()
                                        ],
-                                       
-                                       
                                     ),
                                   ))
                             ],
