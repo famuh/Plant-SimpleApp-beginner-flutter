@@ -2,23 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application/detail_page.dart';
 import 'package:flutter_application/model/model_data.dart';
 
-class Mainpage extends StatefulWidget {
-  
-  Mainpage({Key? key}) : super(key: key);
+class MainPage extends StatelessWidget {
+  const MainPage({Key? key}) : super(key: key);
 
-
-  @override
-  State<Mainpage> createState() => _MainpageState();
-}
-
-class _MainpageState extends State<Mainpage> {
-  final _scrollController = ScrollController();
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    _scrollController.dispose();
-    super.dispose();
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,10 +62,7 @@ class _MainpageState extends State<Mainpage> {
             child: SizedBox(
               height: 200,
               width: MediaQuery.of(context).size.width <= 600 ? 350 : 800,
-              child: Scrollbar(
-                controller: _scrollController,
-                child: ListView.builder(
-                  controller: _scrollController,
+              child:  ListView.builder(
                     scrollDirection: Axis.horizontal,
                     itemCount: plantDataList.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -125,7 +108,6 @@ class _MainpageState extends State<Mainpage> {
                         ),
                       );
                     }),
-              ),
             ),
           )
         ],

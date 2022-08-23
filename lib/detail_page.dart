@@ -112,19 +112,13 @@ class detailMobile extends StatelessWidget {
   }
 }
 
-class detailWeb extends StatefulWidget {
+class detailWeb extends StatelessWidget {
   final plantData plant;
+  const detailWeb({Key? key, required this.plant}) : super(key: key);
 
-  detailWeb({Key? key, required this.plant}) : super(key: key);
-
-  @override
-  State<detailWeb> createState() => _detailWebState();
-}
-
-class _detailWebState extends State<detailWeb> {
   @override
   Widget build(BuildContext context) {
-    Size sizeMedia = MediaQuery.of(context).size;
+     Size sizeMedia = MediaQuery.of(context).size;
     return Scaffold(
       body:
         Row(
@@ -156,7 +150,7 @@ class _detailWebState extends State<detailWeb> {
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(50),
                         image: DecorationImage(
-                            image: AssetImage(widget.plant.imageAsset),
+                            image: AssetImage(plant.imageAsset),
                             fit: BoxFit.cover)),
                   ),
               ],
@@ -174,16 +168,16 @@ class _detailWebState extends State<detailWeb> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    widget.plant.name,
+                    plant.name,
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
                   ),
                   const SizedBox(height: 10),
-                  Text(widget.plant.description,
+                  Text(plant.description,
                       style: TextStyle(fontSize: 12, color: Colors.black54)),
                   const SizedBox(height: 10),
 
                   Text(
-                    'Type : ${widget.plant.type}',
+                    'Type : ${plant.type}',
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 14),
                   ),
                                     const SizedBox(height: 10),
@@ -197,7 +191,7 @@ class _detailWebState extends State<detailWeb> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(widget.plant.price),
+                  Text(plant.price),
                   ElevatedButton(
                       style: ButtonStyle(
                           backgroundColor:
@@ -208,11 +202,11 @@ class _detailWebState extends State<detailWeb> {
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 title: Text(
-                                  '${widget.plant.name} succesfully bought !',
+                                  '${plant.name} succesfully bought !',
                                   style: TextStyle(fontSize: 16),
                                 ),
                                 content: Text(
-                                  'Thankyou for buying ${widget.plant.name}, hope you enjoy it :D',
+                                  'Thankyou for buying ${plant.name}, hope you enjoy it :D',
                                   style: TextStyle(fontSize: 14),
                                 ),
                               );
